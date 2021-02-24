@@ -18,23 +18,34 @@ def is_keyword(word):
         'end',
         'procedure',
         'is',
+        'Text_IO',
+        'Put_Line',
         ]
     return word in keyword_list
 
+def split_in_code_and_comment(line):
+    if "--" not in line:
+        return line,""
+    else:    
+        splits = line.split("--")
+        return splits[0], splits[1]
 
 def uppercase_variables(file_lines ):
     file_lines_out = []
 
     for line in file_lines:
-        if not line.startswith("--"):
-            words = split_into_words(line)
-            print(words)
-            for word in words:
-                if not is_keyword(word):
-                    upper_word = word.upper()    
-                    line = line.replace(word, upper_word, 1)
+        code, comments = split_in_code_and_comment(line)
+        words = split_into_words(code)
+        print(words)
+        for word in words:
+            if not is_keyword(word):
+                upper_word = word.upper()    
+                code = code.replace(word, upper_word, 1)
+        line_out = code
+        if len(comments) > 0:
+            line_out += "--" + comments
 
-        file_lines_out.append(line)
+        file_lines_out.append(line_out)
 
     return file_lines_out
 

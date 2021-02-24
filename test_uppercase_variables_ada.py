@@ -40,15 +40,15 @@ def test_method_commend_middle_line_and_literal_string():
 with Text_IO; use Text_IO;      -- This gets the IO facility.
 procedure Hello is              -- Main, but no special name is needed.
 begin
-   Put_Line("Hello, World!");   -- Put_Line is from Text_IO.
+   Put_Line("HELLO, WORLD!");   -- Put_Line is from Text_IO.
 end Hello;"""
 
     ada_code_out = """
 -- Ada Hello, World! program.
 with Text_IO; use Text_IO;      -- This gets the IO facility.
-procedure Hello is              -- Main, but no special name is needed.
+procedure HELLO is              -- Main, but no special name is needed.
 begin
-   Put_Line("Hello, World!");   -- Put_Line is from Text_IO.
-end Hello;
+   Put_Line("HELLO, WORLD!");   -- Put_Line is from Text_IO.
+end HELLO;
 """
     assert process_code(ada_code_in) == ada_code_out
