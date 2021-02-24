@@ -12,7 +12,12 @@ def split_into_words(line):
 def is_keyword(word):
     keyword_list = [
         'if', 
-        'call',
+        'with',
+        'use',
+        'begin',
+        'end',
+        'procedure',
+        'is',
         ]
     return word in keyword_list
 
