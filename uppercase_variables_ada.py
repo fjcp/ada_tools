@@ -4,32 +4,16 @@ import sys
 import glob
 import os
 import shutil
-
-def string_to_string_list(string):
-    str_list_out = []
-    str_list_aux = string.split("\n")
-    for string in str_list_aux:
-        string += "\n"
-        str_list_out.append(string)
-    return str_list_out
-
-
-def string_list_to_string(string_list):
-    return "".join(string_list)
-
-
-def add_cpp_include(str_list, include_name):
-    str_list.insert(0, '#include "' + include_name + '"\n')
-    return str_list
+import re
 
 def split_into_words(line):
-    import re
-    word_regex_improved = r"(\w[\w']*\w|\w)"
-    word_matcher = re.compile(word_regex_improved)
-    return word_matcher.findall(line)
+    return re.findall(r"\w+", line)
 
 def is_keyword(word):
-    keyword_list = ['if', 'call']
+    keyword_list = [
+        'if', 
+        'call',
+        ]
     return word in keyword_list
 
 
@@ -43,7 +27,7 @@ def uppercase_variables(file_lines ):
             for word in words:
                 if not is_keyword(word):
                     upper_word = word.upper()    
-                    line = line.replace(word, upper_word)
+                    line = line.replace(word, upper_word, 1)
 
         file_lines_out.append(line)
 
@@ -55,10 +39,8 @@ if __name__ == "__main__":
     for dirName, subdirList, fileList in os.walk(rootDir):
         print("Found directory: %s" % dirName)
         for file in fileList:
-            #        for file in ['SortWireDataOp.cpp']:
             if file.endswith(".ada"):
                 full_file_name = os.path.join(dirName, file)
-                # full_file_name = file
                 print("\t%s" % full_file_name)
                 try:
                     input_file = open(full_file_name)
